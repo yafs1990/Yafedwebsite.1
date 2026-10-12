@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;background:#0c0c0b;color:#efede6}
+body{font-family:'Archivo',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:#efede6;text-decoration:none}
+a:hover{color:#f5d400}
+::selection{background:#f5d400;color:#0c0c0b}
+input::placeholder,textarea::placeholder{color:#6f6e69}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+@media (max-width:760px){
+[data-hide-m]{display:none !important}
+[data-show-m]{display:block !important}
+[data-grid2]{grid-template-columns:minmax(0,1fr) !important}
+[data-grid3]{grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important}
+[data-offset]{margin-top:0 !important}
+[data-indent]{padding-left:0 !important}
+[data-g]{grid-column:1 / -1 !important;width:100% !important}
+[data-row]{grid-template-columns:36px minmax(0,1fr) auto !important}
+[data-meta4]{grid-template-columns:1fr 1fr !important}
+[data-nav]{gap:16px !important}
+}
+@media (hover:none),(pointer:coarse){[data-cursor-el],[data-preview]{display:none !important}}
+</style>
+</helmet>
+
+<div data-loader="" style="position: fixed; inset: 0; z-index: 100; background: #0c0c0b; display: {{ loaderDisplay }}; flex-direction: column; justify-content: space-between; padding: 28px clamp(20px, 3.2vw, 48px); transform: translateY({{ loaderY }}); transition: transform 1s cubic-bezier(.77,0,.18,1)">
+  <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #8b8a84">
+    <span>YAFED — PORTFOLIO</span>
+    <span>©2026</span>
+  </div>
+  <div style="display: grid; gap: 18px">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 20px">
+      <span data-loader-count="" style="font-size: clamp(88px, 19vw, 320px); font-weight: 800; font-stretch: 115%; line-height: 0.8; letter-spacing: -0.04em">000%</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #8b8a84; padding-bottom: 8px">LOADING WORK</span>
+    </div>
+    <div style="height: 2px; background: rgba(239,237,230,0.1)"><div data-loader-bar="" style="height: 100%; width: 0%; background: #f5d400"></div></div>
+  </div>
+</div>
+
+<header style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 22px clamp(20px, 3.2vw, 48px); mix-blend-mode: difference; color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em">
+  <a href="#/" style="color: #fff; font-family: 'Archivo', sans-serif; font-weight: 800; font-stretch: 120%; font-size: 19px; letter-spacing: -0.01em; justify-self: start">YAFED.</a>
+  <span data-sec-ind="" data-hide-m="" style="color: #fff">01 // 05</span>
+  <nav data-nav="" style="display: flex; gap: 32px; justify-content: flex-end">
+    <a href="#/projects" data-roll="" style="color: #fff; display: block; overflow: hidden; height: 16px; line-height: 16px"><span data-roll-inner="" style="display: flex; flex-direction: column; transition: transform .55s cubic-bezier(.7,0,.2,1)"><span>PROJECTS</span><span>PROJECTS</span></span></a>
+    <a href="#/about" data-roll="" style="color: #fff; display: block; overflow: hidden; height: 16px; line-height: 16px"><span data-roll-inner="" style="display: flex; flex-direction: column; transition: transform .55s cubic-bezier(.7,0,.2,1)"><span>ABOUT</span><span>ABOUT</span></span></a>
+    <a href="#/contact" data-roll="" style="color: #fff; display: block; overflow: hidden; height: 16px; line-height: 16px"><span data-roll-inner="" style="display: flex; flex-direction: column; transition: transform .55s cubic-bezier(.7,0,.2,1)"><span>CONTACT</span><span>CONTACT</span></span></a>
+  </nav>
+</header>
+
+<div data-cursor-el="" style="position: fixed; left: 0; top: 0; width: 96px; height: 96px; border-radius: 50%; background: #f5d400; color: #0c0c0b; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; z-index: 60; pointer-events: none; transform: scale(0)"><span data-cursor-label="">VIEW</span></div>
+<div data-preview="" style="position: fixed; left: 0; top: 0; width: 280px; aspect-ratio: 4 / 5; overflow: hidden; z-index: 40; pointer-events: none; opacity: 0; transition: opacity .35s ease; background: #151514"><img data-preview-img="" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block" /></div>
+
+<main style="position: relative">
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <section id="top" data-sec="" data-screen-label="01 Hero" style="min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: 120px clamp(20px, 3.2vw, 48px) 40px; position: relative; box-sizing: border-box; overflow: hidden">
+    <div data-hero-bg="" style="position: absolute; inset: -3%; z-index: 0; background: #0c0c0b">
+      <img src="kameleon-cover.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5" />
+      <video data-reel="" muted="" playsinline="" preload="auto" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0"></video>
+      <video data-reel="" muted="" playsinline="" preload="auto" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0"></video>
+    </div>
+    <div style="position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(12,12,11,0.6) 0%, rgba(12,12,11,0.12) 38%, rgba(12,12,11,0.55) 68%, #0c0c0b 100%)"></div>
+    <div style="position: absolute; z-index: 2; top: 96px; left: clamp(20px, 3.2vw, 48px); right: clamp(20px, 3.2vw, 48px); display: flex; justify-content: space-between; gap: 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #8b8a84">
+      <span>STRATEGIC DESIGNER — INDUSTRIAL · BRAND · WEB · 3D</span>
+      <span style="display: flex; align-items: center; gap: 10px"><span style="width: 7px; height: 7px; border-radius: 50%; background: #f5d400; animation: pulse 1.8s ease-in-out infinite"></span>AVAILABLE FOR PROJECTS</span>
+    </div>
+    <h1 style="position: relative; z-index: 2; margin: 0; font-size: clamp(44px, 11.5vw, 210px); font-weight: 800; font-stretch: 106%; line-height: 0.86; letter-spacing: -0.045em; text-transform: uppercase">
+      <span style="display: block; overflow: hidden; padding-bottom: 0.04em"><span data-reveal="mask" style="display: block">Creative</span></span>
+      <span data-indent="" style="display: block; overflow: hidden; padding-bottom: 0.04em; padding-left: 8vw"><span data-reveal="mask" data-delay="90" style="display: block">Strategist<span style="color: #f5d400">.</span></span></span>
+      <span style="display: block; overflow: hidden; padding-top: 0.25em"><span data-reveal="mask" data-delay="180" style="display: block; font-size: clamp(20px, 2.6vw, 46px); font-weight: 500; font-stretch: 100%; letter-spacing: -0.015em; line-height: 1.1">Working across industries — <span style="color: #f5d400">industrial, brand, web &amp; 3D.</span></span></span>
+    </h1>
+    <div data-grid2="" style="position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 24px; align-items: end; margin-top: 7vh">
+      <div style="display: flex; gap: 36px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #c9c7c0">
+        <a href="#/about" data-hide-m="" style="color: #c9c7c0; display: flex; align-items: center; gap: 10px"><span style="display: inline-block; animation: cue 1.6s ease-in-out infinite">↓</span>SCROLL</a>
+        <a href="#/work" style="color: #c9c7c0; display: flex; align-items: center; gap: 12px"><span style="width: 28px; height: 1px; background: #f5d400"></span><span data-hero-cap="">SHOWREEL</span></a>
+      </div>
+      <p data-reveal="" data-delay="300" style="margin: 0; justify-self: end; max-width: 420px; font-size: 17px; line-height: 1.5; color: #c9c7c0; text-wrap: pretty">From the product itself to the brand, the website and the film that launches it — I connect strategy and craft so ideas land in the market.</p>
+    </div>
+  </section>
+
+  <section id="about" data-sec="" data-screen-label="02 About" style="padding: 18vh 0 0">
+    <div style="padding: 0 clamp(20px, 3.2vw, 48px)">
+      <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #8b8a84; border-top: 1px solid rgba(239,237,230,0.14); padding-top: 16px; margin-bottom: 9vh">
+        <span><span style="color: #f5d400">02 /</span> ABOUT</span>
+        <span>/05</span>
+      </div>
+      <div data-grid2="" style="display: grid; grid-template-columns: minmax(0,1.35fr) minmax(0,1fr); gap: 6vw; align-items: start">
+        <div style="display: grid; gap: 40px">
+          <p data-reveal="" style="margin: 0; font-size: clamp(28px, 3.7vw, 60px); font-weight: 500; font-stretch: 104%; line-height: 1.06; letter-spacing: -0.025em; text-wrap: pretty">Hi, I'm Yafed — a strategic designer connecting industrial, brand, web and 3D into <span style="color: #f5d400">one clear story.</span></p>
+          <div data-reveal="" data-delay="120" style="display: grid; gap: 28px; max-width: 470px">
+            <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #a9a7a0; text-wrap: pretty">I start with the business question, then design the answer across every touchpoint — the object, the identity, the website and the visuals that sell it. Industrial design, brand systems, web and 3D product visualization, under one strategy.</p>
+            <a href="https://www.linkedin.com/in/yafed-saldivar/" target="_blank" rel="noopener" data-roll="" style="color: #efede6; display: block; overflow: hidden; height: 18px; line-height: 18px; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.1em; width: max-content"><span data-roll-inner="" style="display: flex; flex-direction: column; transition: transform .55s cubic-bezier(.7,0,.2,1)"><span>LINKEDIN ↗</span><span style="color: #f5d400">LINKEDIN ↗</span></span></a>
+          </div>
+        </div>
+        <div data-reveal="" data-delay="80" style="aspect-ratio: 4 / 5; overflow: hidden; background: #151514">
+          <img src="portrait.jpg" alt="Yafed portrait" style="width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.05); transition: transform 1.4s cubic-bezier(.19,1,.22,1), filter .8s ease" style-hover="transform: scale(1.04); filter: grayscale(0)" />
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 16vh; border-top: 1px solid rgba(239,237,230,0.14); border-bottom: 1px solid rgba(239,237,230,0.14); overflow: hidden; padding: 2vh 0">
+      <div style="display: flex; width: max-content; animation: marquee 30s linear infinite; font-size: clamp(48px, 8.5vw, 150px); font-weight: 800; font-stretch: 118%; letter-spacing: -0.03em; line-height: 1; text-transform: uppercase; white-space: nowrap">
+        <span style="padding-right: 0.4em">Strategy <span style="color: #f5d400">—</span> <span style="color: transparent; -webkit-text-stroke: 1.5px #efede6">Industrial</span> <span style="color: #f5d400">—</span> Brand <span style="color: #f5d400">—</span> <span style="color: transparent; -webkit-text-stroke: 1.5px #efede6">Web</span> <span style="color: #f5d400">—</span> 3D <span style="color: #f5d400">—</span></span>
+        <span style="padding-right: 0.4em">Strategy <span style="color: #f5d400">—</span> <span style="color: transparent; -webkit-text-stroke: 1.5px #efede6">Industrial</span> <span style="color: #f5d400">—</span> Brand <span style="color: #f5d400">—</span> <span style="color: transparent; -webkit-text-stroke: 1.5px #efede6">Web</span> <span style="color: #f5d400">—</span> 3D <span style="color: #f5d400">—</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" data-sec="" data-screen-label="03 Work" style="padding: 18vh clamp(20px, 3.2vw, 48px) 0">
+    <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #8b8a84; border-top: 1px solid rgba(239,237,230,0.14); padding-top: 16px; margin-bottom: 9vh">
+      <span><span style="color: #f5d400">03 /</span> SELECTED WORK</span>
+      <span>/05</span>
+    </div>
+    <div data-grid2="" style="display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 24px; align-items: end; margin-bottom: 10vh">
+      <h2 data-reveal="" style="margin: 0; font-size: clamp(40px, 6.4vw, 112px); font-weight: 800; font-stretch: 115%; line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase">Selected<br />Projects</h2>
+      <div data-reveal="" data-delay="100" style="justify-self: end; display: grid; gap: 22px; max-width: 380px">
+        <p style="margin: 0; font-size: 16px; line-height: 1.55; color: #a9a7a0; text-wrap: pretty">Products, launches and campaigns across industries — from first sketch to final frame.</p>
+        <a href="#/projects" data-roll="" style="color: #efede6; display: block; overflow: hidden; height: 18px; line-height: 18px; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.1em; width: max-content"><span data-roll-inner="" style="display: flex; flex-direction: column; transition: transform .55s cubic-bezier(.7,0,.2,1)"><span>VIEW ALL PROJECTS →</span><span style="color: #f5d400">VIEW ALL PROJECTS →</span></span></a>
+      </div>
+    </div>
+    <div data-grid2="" style="display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); column-gap: 3vw; row-gap: 10vh; align-items: start">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="4">
+        <a href="#/project/{{ p.id }}" data-card="" data-cursor="VIEW" data-offset="" style="display: grid; gap: 14px; color: #efede6; margin-top: {{ p.offset }}">
+          <div data-reveal="" style="position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #151514">
+            <img data-card-img="" src="{{ p.cover }}" alt="{{ p.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.3s cubic-bezier(.19,1,.22,1)" />
+            <video data-card-video="" src="{{ p.video }}" muted="{{ true }}" loop="{{ true }}" playsinline="" preload="none" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .6s ease"></video>
+            <span style="position: absolute; left: 14px; top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #0c0c0b; background: #efede6; padding: 6px 9px">FEATURED PROJECT</span>
+          </div>
+          <div style="display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 16px; align-items: baseline; border-top: 1px solid rgba(239,237,230,0.14); padding-top: 14px">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #f5d400">{{ p.num }}</span>
+            <span style="font-size: clamp(22px, 2.1vw, 32px); font-weight: 700; font-stretch: 112%; letter-spacing: -0.02em; text-transform: uppercase">{{ p.name }}</span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8b8a84">{{ p.year }}</span>
+          </div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: #8b8a84; text-transform: uppercase">{{ p.type }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="lab" data-sec="" data-screen-label="04 Lab" style="position: relative; overflow: hidden; margin-top: 22vh; padding: 14vh clamp(20px, 3.2vw, 48px) 14vh">
+    <sc-if value="{{ bgLab }}" hint-placeholder-val="{{ true }}">
+    <video data-autoplay="" src="capabilities.mp4" muted="{{ true }}" loop="{{ true }}" playsinline="" autoplay="{{ true }}" preload="auto" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none"></video>
+    <div style="position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(180deg, #0c0c0b 0%, rgba(12,12,11,0.6) 16%, rgba(12,12,11,0.6) 84%, #0c0c0b 100%)"></div>
+    </sc-if>
+    <div style="position: relative; z-index: 1; display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #c9c7c0; border-top: 1px solid rgba(239,237,230,0.24); padding-top: 16px; margin-bottom: 9vh">
+      <span><span style="color: #f5d400">04 /</span> LAB</span>
+      <span>/05</span>
+    </div>
+    <div data-grid2="" style="position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 24px; align-items: end; margin-bottom: 8vh">
+      <h2 data-reveal="" style="margin: 0; font-size: clamp(40px, 6.4vw, 112px); font-weight: 800; font-stretch: 115%; line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase">Geometry<br />Nodes Lab</h2>
+      <p data-reveal="" data-delay="100" style="margin: 0; justify-self: end; max-width: 380px; font-size: 16px; line-height: 1.55; color: #c9c7c0; text-wrap: pretty">Procedural experiments in Blender — systems, growth and pattern studies. Where the ideas for client work get tested first.</p>
+    </div>
+    <div data-grid3="" style="position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px">
+      <sc-for list="{{ lab }}" as="l" hint-placeholder-count="6">
+        <div data-reveal="" data-delay="{{ l.delay }}" style="position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #151514">
+          <img src="{{ l.src }}" alt="Geometry nodes experiment {{ l.num }}" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.3s cubic-bezier(.19,1,.22,1)" style-hover="transform: scale(1.08)" />
+          <span style="position: absolute; left: 12px; bottom: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #0c0c0b; background: #efede6; padding: 5px 8px; pointer-events: none">GN — {{ l.num }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="capabilities" data-sec="" data-screen-label="05 Capabilities" style="position: relative; overflow: hidden; margin-top: 22vh; padding: 14vh 0 14vh">
+    <sc-if value="{{ bgCaps }}" hint-placeholder-val="{{ false }}">
+    <video data-autoplay="" src="capabilities.mp4" muted="{{ true }}" loop="{{ true }}" playsinline="" autoplay="{{ true }}" preload="auto" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none"></video>
+    <div style="position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(180deg, #0c0c0b 0%, rgba(12,12,11,0.62) 18%, rgba(12,12,11,0.62) 82%, #0c0c0b 100%)"></div>
+    </sc-if>
+    <div style="position: relative; z-index: 1; padding: 0 clamp(20px, 3.2vw, 48px)">
+      <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #c9c7c0; border-top: 1px solid rgba(239,237,230,0.24); padding-top: 16px; margin-bottom: 9vh">
+        <span><span style="color: #f5d400">05 /</span> CAPABILITIES</span>
+        <span>/05</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 7vh; flex-wrap: wrap">
+        <h2 data-reveal="" style="margin: 0; font-size: clamp(40px, 6.4vw, 112px); font-weight: 800; font-stretch: 115%; line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase">Project types<br />I specialise in</h2>
+      </div>
+    </div>
+    <div style="position: relative; z-index: 1; padding: 0 clamp(20px, 3.2vw, 48px)">
+      <div data-grid3="" style="display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); border-top: 1px solid rgba(239,237,230,0.32); border-left: 1px solid rgba(239,237,230,0.32)">
+        <sc-for list="{{ caps }}" as="c" hint-placeholder-count="6">
+          <div style="min-height: clamp(200px, 19vw, 300px); box-sizing: border-box; border-right: 1px solid rgba(239,237,230,0.32); border-bottom: 1px solid rgba(239,237,230,0.32); padding: clamp(18px, 2vw, 30px); display: flex; flex-direction: column; justify-content: space-between; gap: 24px; color: #efede6">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #f5d400">{{ c.num }}</span>
+            <div style="display: grid; gap: 12px">
+              <span style="font-size: clamp(20px, 2vw, 32px); font-weight: 700; font-stretch: 110%; line-height: 1.02; letter-spacing: -0.02em; text-transform: uppercase">{{ c.title }}</span>
+              <span style="font-size: 14px; line-height: 1.5; color: #d6d4cd; max-width: 320px">{{ c.desc }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" data-sec="" data-screen-label="05 Contact" style="padding: 24vh clamp(20px, 3.2vw, 48px) 10vh">
+    <p style="margin: 0 0 4vh; text-align: center; font-size: clamp(20px, 2.4vw, 38px); font-weight: 500; font-stretch: 105%; letter-spacing: -0.01em; color: #efede6; text-transform: uppercase">Got a project in mind?</p>
+    <h2 style="margin: 0; text-align: center; font-size: clamp(64px, 16vw, 290px); font-weight: 800; font-stretch: 120%; line-height: 0.84; letter-spacing: -0.05em; text-transform: uppercase">
+      <span style="display: block; overflow: hidden"><span data-reveal="mask" style="display: block">Let's</span></span>
+      <span style="display: block; overflow: hidden"><span data-reveal="mask" data-delay="100" style="display: block; color: #f5d400">Connect</span></span>
+    </h2>
+    <div data-grid2="" style="display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.2fr); gap: 6vw; margin-top: 14vh; align-items: start">
+      <div style="display: grid; gap: 28px">
+        <p style="margin: 0; font-size: clamp(22px, 2.2vw, 34px); font-weight: 500; line-height: 1.15; letter-spacing: -0.015em; max-width: 440px; text-wrap: pretty">Write me a message — I usually reply within two days.</p>
+        <a href="https://www.linkedin.com/in/yafed-saldivar/" target="_blank" rel="noopener" data-roll="" style="color: #efede6; display: block; overflow: hidden; height: 18px; line-height: 18px; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.1em; width: max-content"><span data-roll-inner="" style="display: flex; flex-direction: column; transition: transform .55s cubic-bezier(.7,0,.2,1)"><span>OR FIND ME ON LINKEDIN ↗</span><span style="color: #f5d400">OR FIND ME ON LINKEDIN ↗</span></span></a>
+      </div>
+      <form onSubmit="{{ onSubmit }}" style="display: grid; gap: 8px">
+        <input name="name" required="" placeholder="Your name" style="background: transparent; border: 0; border-bottom: 1px solid rgba(239,237,230,0.2); color: #efede6; font: inherit; font-size: 17px; padding: 18px 0; outline: none" style-focus="border-bottom-color: #f5d400" />
+        <input name="email" type="email" required="" placeholder="Email address" style="background: transparent; border: 0; border-bottom: 1px solid rgba(239,237,230,0.2); color: #efede6; font: inherit; font-size: 17px; padding: 18px 0; outline: none" style-focus="border-bottom-color: #f5d400" />
+        <textarea name="message" required="" rows="4" placeholder="Tell me about the project" style="background: transparent; border: 0; border-bottom: 1px solid rgba(239,237,230,0.2); color: #efede6; font: inherit; font-size: 17px; padding: 18px 0; outline: none; resize: vertical" style-focus="border-bottom-color: #f5d400"></textarea>
+        <button type="submit" style="justify-self: start; margin-top: 24px; background: #f5d400; color: #0c0c0b; border: 0; padding: 18px 30px; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; cursor: pointer; transition: background .3s ease" style-hover="background: #efede6">{{ sendLabel }}</button>
+      </form>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isProjects }}" hint-placeholder-val="{{ false }}">
+  <section data-screen-label="Projects Index" style="padding: 22vh clamp(20px, 3.2vw, 48px) 14vh; min-height: 100vh; box-sizing: border-box">
+    <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #8b8a84; margin-bottom: 4vh">
+      <span><span style="color: #f5d400">INDEX /</span> ALL WORK</span>
+      <span>{{ countLabel }}</span>
+    </div>
+    <h1 style="margin: 0 0 10vh; font-size: clamp(56px, 13vw, 240px); font-weight: 800; font-stretch: 120%; line-height: 0.84; letter-spacing: -0.05em; text-transform: uppercase; overflow: hidden"><span data-reveal="mask" style="display: block">Projects<span style="color: #f5d400">.</span></span></h1>
+    <div style="border-bottom: 1px solid rgba(239,237,230,0.14)">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="4">
+        <a href="#/project/{{ p.id }}" data-row="" data-cover="{{ p.cover }}" data-cursor="OPEN" style="display: grid; grid-template-columns: 70px minmax(0,1fr) 280px 70px; align-items: center; gap: 20px; padding: 30px 0; border-top: 1px solid rgba(239,237,230,0.14); color: #efede6; transition: color .35s ease" style-hover="color: #f5d400">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px">{{ p.num }}</span>
+          <span data-row-name="" style="font-size: clamp(34px, 6.2vw, 108px); font-weight: 800; font-stretch: 115%; line-height: 0.92; letter-spacing: -0.04em; text-transform: uppercase; transition: transform .7s cubic-bezier(.19,1,.22,1)">{{ p.name }}</span>
+          <span data-hide-m="" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.6">{{ p.type }}</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; text-align: right; opacity: 0.6">{{ p.year }}</span>
+          <img data-show-m="" src="{{ p.cover }}" alt="" style="display: none; grid-column: 1 / -1; width: 100%; aspect-ratio: 16 / 10; object-fit: cover" />
+        </a>
+      </sc-for>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isProject }}" hint-placeholder-val="{{ false }}">
+  <article data-screen-label="Case Study" style="padding-top: 20vh">
+    <div style="padding: 0 clamp(20px, 3.2vw, 48px)">
+      <div style="display: flex; justify-content: space-between; gap: 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #8b8a84; margin-bottom: 4vh">
+        <a href="#/projects" style="color: #8b8a84">← ALL PROJECTS</a>
+        <span><span style="color: #f5d400">CASE {{ cur.num }}</span> / {{ countPad }}</span>
+      </div>
+      <h1 style="margin: 0; font-size: clamp(52px, 11.5vw, 210px); font-weight: 800; font-stretch: 118%; line-height: 0.86; letter-spacing: -0.05em; text-transform: uppercase; overflow: hidden; text-wrap: balance"><span data-reveal="mask" style="display: block">{{ cur.name }}</span></h1>
+      <div data-meta4="" style="display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 24px; margin-top: 8vh; border-top: 1px solid rgba(239,237,230,0.14); padding-top: 18px">
+        <div style="display: grid; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #8b8a84">CLIENT</span><span style="font-size: 15px">{{ cur.client }}</span></div>
+        <div style="display: grid; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #8b8a84">ROLE</span><span style="font-size: 15px">{{ cur.role }}</span></div>
+        <div style="display: grid; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #8b8a84">YEAR</span><span style="font-size: 15px">{{ cur.year }}</span></div>
+        <div style="display: grid; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #8b8a84">DELIVERABLES</span><span style="font-size: 15px">{{ cur.deliverables }}</span></div>
+      </div>
+    </div>
+    <div style="margin-top: 8vh; background: #000">
+      <video data-autoplay="" src="{{ cur.video }}" poster="{{ cur.cover }}" muted="{{ true }}" loop="{{ true }}" playsinline="" autoplay="{{ true }}" controls="" style="display: block; width: 100%; max-height: 100vh; aspect-ratio: 16 / 9; object-fit: cover; background: #000"></video>
+    </div>
+    <div data-grid2="" style="display: grid; grid-template-columns: minmax(0,1fr) minmax(0,2fr); gap: 6vw; padding: 14vh clamp(20px, 3.2vw, 48px)">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #8b8a84"><span style="color: #f5d400">—</span> OVERVIEW</span>
+      <p data-reveal="" style="margin: 0; font-size: clamp(22px, 2.5vw, 40px); font-weight: 500; line-height: 1.2; letter-spacing: -0.02em; text-wrap: pretty">{{ cur.overview }}</p>
+    </div>
+    <div style="display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 16px; padding: 0 clamp(20px, 3.2vw, 48px)">
+      <sc-for list="{{ cur.gallery }}" as="g" hint-placeholder-count="3">
+        <div data-g="" data-reveal="" style="grid-column: {{ g.col }}; width: {{ g.w }}; justify-self: center; overflow: hidden; background: #151514">
+          <img src="{{ g.src }}" alt="{{ cur.name }}" loading="lazy" style="display: block; width: 100%; aspect-ratio: {{ g.ratio }}; object-fit: cover; transition: transform 1.4s cubic-bezier(.19,1,.22,1)" style-hover="transform: scale(1.03)" />
+        </div>
+      </sc-for>
+    </div>
+    <a href="#/project/{{ cur.nextId }}" data-cursor="NEXT" style="display: block; margin-top: 18vh; border-top: 1px solid rgba(239,237,230,0.14); padding: 10vh clamp(20px, 3.2vw, 48px); text-align: center; color: #efede6; transition: color .35s ease" style-hover="color: #f5d400">
+      <span style="display: block; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #8b8a84; margin-bottom: 3vh">NEXT PROJECT →</span>
+      <span style="display: block; font-size: clamp(48px, 10vw, 180px); font-weight: 800; font-stretch: 118%; line-height: 0.88; letter-spacing: -0.05em; text-transform: uppercase">{{ cur.nextName }}</span>
+    </a>
+  </article>
+</sc-if>
+
+<footer style="border-top: 1px solid rgba(239,237,230,0.14); padding: 6vh clamp(20px, 3.2vw, 48px) 28px; overflow: hidden">
+  <div style="font-size: clamp(64px, 13vw, 240px); font-weight: 900; font-stretch: 120%; line-height: 0.8; letter-spacing: -0.05em; text-align: center; white-space: nowrap">YAFED<span style="color: #f5d400">.</span></div>
+  <div style="display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 5vh; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #8b8a84">
+    <span>© 2026 YAFED</span>
+    <a href="https://www.linkedin.com/in/yafed-saldivar/" target="_blank" rel="noopener" style="color: #8b8a84">LINKEDIN ↗</a>
+    <a href="#/" onClick="{{ toTop }}" style="color: #8b8a84">BACK TO TOP ↑</a>
+  </div>
+</footer>
+
+</main>
+
+<div onClick="{{ onOverlayClick }}" style="display: {{ modalDisplay }}; position: fixed; inset: 0; background: rgba(0,0,0,0.78); z-index: 999; align-items: center; justify-content: center; padding: 24px">
+  <div style="background: #0c0c0b; border: 1px solid #f5d400; max-width: 420px; width: 100%; padding: 36px 28px; text-align: center; display: grid; gap: 16px; justify-items: center">
+    <div style="font-weight: 800; font-stretch: 120%; font-size: 20px; color: #f5d400">YAFED.</div>
+    <h2 style="margin: 0; font-size: 24px; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em">{{ modalTitle }}</h2>
+    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #a9a7a0; max-width: 320px">{{ modalText }}</p>
+    <button type="button" onClick="{{ closeModal }}" style="margin-top: 6px; background: #f5d400; color: #0c0c0b; border: 0; padding: 14px 28px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; cursor: pointer">CLOSE</button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showLoader&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;hoverVideo&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;n9Background&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Capabilities&quot;,&quot;Lab&quot;,&quot;Both&quot;],&quot;default&quot;:&quot;Capabilities&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  P = [
+    { id: "kameleon", name: "Kameleon V01", type: "CGI Product Film", client: "Self-initiated", role: "3D · Look Dev · Art Direction", year: "2025", deliverables: "Launch film, key visuals", cover: "kameleon-cover.jpg", video: "kameleon.mp4",
+      overview: "A concept urban sneaker built entirely in CGI. Kameleon V01 explores a skin-like knit and adaptive surface — from macro material studies to the retail world designed around the shoe and its launch film.",
+      gallery: [
+        { src: "kameleon-1.jpg", col: "1 / -1", w: "100%", ratio: "2576 / 1073" },
+        { src: "kameleon-2.jpg", col: "auto", w: "100%", ratio: "4 / 5" },
+        { src: "kameleon-3.jpg", col: "auto", w: "100%", ratio: "4 / 5" },
+        { src: "kameleon-4.jpg", col: "1 / -1", w: "100%", ratio: "2576 / 1073" },
+        { src: "kameleon-5.jpg", col: "1 / -1", w: "100%", ratio: "2576 / 1073" },
+        { src: "kameleon-6.jpg", col: "1 / -1", w: "100%", ratio: "2576 / 1073" }
+      ] },
+    { id: "personaiz", name: "Person-AIz Powerband", type: "CGI Product Film", client: "Person-AIz", role: "3D · Animation · Look Dev", year: "2025", deliverables: "Product film, stills", cover: "personaiz-1.jpg", video: "personaiz.mp4",
+      overview: "Product film for the Powerband, a wearable from Person-AIz. Soft studio light, satin metal and slow orbiting moves bring out the form and its tactile controls.",
+      gallery: [
+        { src: "personaiz-1.jpg", col: "1 / -1", w: "100%", ratio: "16 / 9" },
+        { src: "personaiz-2.jpg", col: "1 / -1", w: "100%", ratio: "16 / 9" }
+      ] },
+    { id: "myqen", name: "Myqen Yoga", type: "CGI Product Launch", client: "Airplove × Myqen", role: "3D · Animation · Art Direction", year: "2025", deliverables: "Launch film, stills", cover: "myqen-cover.jpg", video: "myqen.mp4",
+      overview: "Launch visuals for the Myqen Yoga toothbrush — a soft-metal palette, sculptural set pieces and slow macro moves that let the product read like jewellery.",
+      gallery: [
+        { src: "myqen-1.jpg", col: "1 / -1", w: "100%", ratio: "16 / 9" },
+        { src: "myqen-2.jpg", col: "auto", w: "100%", ratio: "4 / 5" },
+        { src: "myqen-3.jpg", col: "auto", w: "100%", ratio: "4 / 5" }
+      ] },
+    { id: "audiophone", name: "The Audiophone", type: "Concept Device & Campaign", client: "Self-initiated", role: "Product Concept · 3D · Campaign", year: "2025", deliverables: "Product film, key visual", cover: "audiophone-cover.jpg", video: "audiophone.mp4",
+      overview: "A music-first phone with a tortoiseshell back and a stripped-back interface. The campaign pairs product renders with editorial portraiture to sell a feeling, not a spec sheet.",
+      gallery: [
+        { src: "audiophone-1.jpg", col: "1 / -1", w: "100%", ratio: "16 / 9" },
+        { src: "audiophone-cover.jpg", col: "1 / -1", w: "50%", ratio: "2 / 3" }
+      ] },
+    { id: "modwlry", name: "Modwlry", type: "Campaign Film", client: "Modwlry", role: "3D · Motion · Art Direction", year: "2025", deliverables: "Campaign film", cover: "modwlry-cover.jpg", video: "modwlry.mp4",
+      overview: "Campaign film for a modular jewellery system — pieces orbit, click and lock into place, built around the satisfaction of the snap.",
+      gallery: [
+        { src: "modwlry-cover.jpg", col: "1 / -1", w: "60%", ratio: "1 / 1" }
+      ] }
+  ];
+  CAPS = [
+    ["Design Strategy", "Positioning, research and the creative direction that ties every touchpoint together."],
+    ["Industrial Design", "Products and concepts shaped from sketch to CMF and production-ready form."],
+    ["Brand Design", "Identities and visual systems built to scale across product, packaging and digital."],
+    ["Web Design", "Sites and launch pages that turn a product story into conversion."],
+    ["3D Product Visualization", "CGI films and key visuals that sell a product before it exists."],
+    ["Art Direction", "Owning the visual idea from moodboard to final frame."]
+  ];
+  LAB = [1, 2, 3, 4, 5, 6].map((n) => "gn-" + n + ".jpg");
+  state = { route: this.parse(), loaded: false, loaderOut: false, sending: false, sent: false, modal: null };
+
+  parse() {
+    const h = (window.location.hash || "").replace(/^#\/?/, "");
+    const [a, b] = h.split("/");
+    if (a === "projects") return { page: "projects" };
+    if (a === "project" && this.P.some((p) => p.id === b)) return { page: "project", id: b };
+    return { page: "home", anchor: ["about", "contact", "work", "lab"].includes(a) ? a : null };
+  }
+
+  componentDidMount() {
+    this.mobile = window.matchMedia("(max-width: 760px), (hover: none)").matches;
+    this.fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    this.mx = innerWidth / 2; this.my = innerHeight / 2; this.cx = this.mx; this.cy = this.my;
+    this.ps = 0; this.pt = 0; this.cs = 0; this.ct = 0;
+    this.onHash = () => this.setState({ route: this.parse() }, () => this.afterRoute(true));
+    window.addEventListener("hashchange", this.onHash);
+    this.bindHovers();
+    this.onScroll = () => this.updateSec();
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    this.loop();
+    this.runLoader();
+  }
+
+  componentDidUpdate(pp) {
+    if (pp.n9Background !== this.props.n9Background) requestAnimationFrame(() => document.querySelectorAll("video[data-autoplay]").forEach((v) => { v.muted = true; v.loop = true; const pr = v.play(); if (pr) pr.catch(() => {}); }));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("hashchange", this.onHash);
+    window.removeEventListener("scroll", this.onScroll);
+    (this.unbind || []).forEach((f) => f());
+    cancelAnimationFrame(this.raf);
+    this.reelTok = (this.reelTok || 0) + 1;
+    if (this.io) this.io.disconnect();
+  }
+
+  runLoader() {
+    const done = () => {
+      this.setState({ loaded: true });
+      setTimeout(() => this.setState({ loaderOut: true }), 1000);
+      setTimeout(() => this.afterRoute(false), 250);
+    };
+    if (this.props.showLoader === false) { this.setState({ loaded: true, loaderOut: true }, () => this.afterRoute(false)); return; }
+    const dur = this.mobile ? 700 : 1600, t0 = performance.now();
+    const c = document.querySelector("[data-loader-count]"), bar = document.querySelector("[data-loader-bar]");
+    const tick = (t) => {
+      const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3), n = Math.round(e * 100);
+      if (c) c.textContent = String(n).padStart(3, "0") + "%";
+      if (bar) bar.style.width = n + "%";
+      if (k < 1) requestAnimationFrame(tick); else setTimeout(done, 200);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  afterRoute(changed) {
+    const r = this.state.route;
+    this.ct = 0; this.pt = 0;
+    requestAnimationFrame(() => {
+      if (r.anchor) {
+        const el = document.getElementById(r.anchor);
+        if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 40, behavior: changed && !this.mobile ? "smooth" : "auto" });
+      } else if (changed) window.scrollTo(0, 0);
+      document.querySelectorAll("video[data-autoplay]").forEach((v) => { v.muted = true; v.loop = true; const pr = v.play(); if (pr) pr.catch(() => {}); });
+      this.initReveals();
+      this.updateSec();
+      this.startHero();
+    });
+  }
+
+  startHero() {
+    const tok = (this.reelTok = (this.reelTok || 0) + 1);
+    const vids = [...document.querySelectorAll("[data-reel]")];
+    if (vids.length < 2) return;
+    const cap = document.querySelector("[data-hero-cap]");
+    const byId = Object.fromEntries(this.P.map((p) => [p.id, p]));
+    byId.n9 = { video: "capabilities.mp4", name: "Geometry Nodes Lab" };
+    const segs = [["kameleon", 0.12], ["personaiz", 0.2], ["myqen", 0.3], ["audiophone", 0.25], ["modwlry", 0.3], ["n9", 0], ["kameleon", 0.55], ["personaiz", 0.62], ["myqen", 0.7], ["audiophone", 0.68], ["modwlry", 0.72]];
+    const CUT = 2800;
+    const wait = (el, ev, ms) => new Promise((r) => { const t = setTimeout(r, ms); el.addEventListener(ev, () => { clearTimeout(t); r(); }, { once: true }); });
+    const prep = async (v, seg) => {
+      const src = byId[seg[0]].video;
+      v.muted = true;
+      if (!v.src.endsWith(src)) { v.src = src; await wait(v, "loadedmetadata", 4000); }
+      const d = isFinite(v.duration) && v.duration > 0 ? v.duration : 10;
+      v.currentTime = Math.max(0, Math.min(d - 3.2, d * seg[1]));
+      await wait(v, "seeked", 3000);
+    };
+    let i = 0, front = vids[0], back = vids[1];
+    const show = (v, seg) => {
+      const pr = v.play(); if (pr) pr.catch(() => {});
+      v.style.opacity = "1";
+      if (cap) cap.textContent = "SHOWREEL — " + byId[seg[0]].name.toUpperCase();
+    };
+    const run = async () => {
+      await prep(front, segs[0]);
+      if (tok !== this.reelTok) return;
+      show(front, segs[0]);
+      while (tok === this.reelTok) {
+        const n = (i + 1) % segs.length;
+        const t0 = performance.now();
+        await prep(back, segs[n]);
+        const left = CUT - (performance.now() - t0);
+        if (left > 0) await new Promise((r) => setTimeout(r, left));
+        if (tok !== this.reelTok || !back.isConnected) return;
+        show(back, segs[n]);
+        front.style.opacity = "0"; front.pause();
+        [front, back] = [back, front]; i = n;
+      }
+    };
+    run();
+  }
+
+  initReveals() {
+    const els = document.querySelectorAll("[data-reveal]");
+    if (this.mobile) return;
+    if (!this.io) {
+      this.io = new IntersectionObserver((entries) => entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        const el = en.target.__child || en.target, d = +(el.getAttribute("data-delay") || 0);
+        el.style.transition = `transform 1.15s cubic-bezier(.19,1,.22,1) ${d}ms, opacity .9s ease ${d}ms`;
+        el.style.transform = "none"; el.style.opacity = "1";
+        this.io.unobserve(en.target);
+      }), { threshold: 0.12 });
+    }
+    els.forEach((el) => {
+      if (el.__rv) return; el.__rv = true;
+      const mask = el.getAttribute("data-reveal") === "mask";
+      el.style.transition = "none";
+      el.style.transform = mask ? "translateY(110%)" : "translateY(50px)";
+      if (!mask) el.style.opacity = "0";
+      if (mask && el.parentElement) { el.parentElement.__child = el; this.io.observe(el.parentElement); }
+      else this.io.observe(el);
+    });
+  }
+
+  updateSec() {
+    const ind = document.querySelector("[data-sec-ind]");
+    if (!ind) return;
+    const r = this.state.route;
+    if (r.page === "projects") { ind.textContent = "INDEX // " + String(this.P.length).padStart(2, "0"); return; }
+    if (r.page === "project") { const i = this.P.findIndex((p) => p.id === r.id); ind.textContent = "CASE " + String(i + 1).padStart(2, "0") + " // " + String(this.P.length).padStart(2, "0"); return; }
+    const secs = [...document.querySelectorAll("[data-sec]")].slice(0, 5);
+    let n = 1;
+    secs.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * 0.5) n = i + 1; });
+    ind.textContent = "0" + n + " // 05";
+  }
+
+  bindHovers() {
+    const hs = [
+      { sel: "[data-roll]", on: (el) => { const i = el.querySelector("[data-roll-inner]"); if (i) i.style.transform = "translateY(-50%)"; }, off: (el) => { const i = el.querySelector("[data-roll-inner]"); if (i) i.style.transform = "none"; } },
+      { sel: "[data-cursor]", on: (el) => { const l = document.querySelector("[data-cursor-label]"); if (l) l.textContent = el.getAttribute("data-cursor"); this.ct = 1; }, off: () => { this.ct = 0; } },
+      { sel: "[data-card]", on: (el) => {
+          const im = el.querySelector("[data-card-img]"); if (im) im.style.transform = "scale(1.07)";
+          if (this.props.hoverVideo === false) return;
+          const v = el.querySelector("[data-card-video]"); if (v) { v.muted = true; v.loop = true; const pr = v.play(); if (pr) pr.catch(() => {}); v.style.opacity = "1"; }
+        }, off: (el) => {
+          const im = el.querySelector("[data-card-img]"); if (im) im.style.transform = "none";
+          const v = el.querySelector("[data-card-video]"); if (v) { v.style.opacity = "0"; v.pause(); }
+        } },
+      { sel: "[data-row]", on: (el) => {
+          const n = el.querySelector("[data-row-name]"); if (n) n.style.transform = "translateX(28px)";
+          const img = document.querySelector("[data-preview-img]"); if (img) img.src = el.getAttribute("data-cover");
+          this.pt = 1;
+        }, off: (el) => { const n = el.querySelector("[data-row-name]"); if (n) n.style.transform = "none"; this.pt = 0; } }
+    ];
+    const inside = (el, rel) => rel && el.contains(rel);
+    const over = (e) => { if (!this.fine) return; hs.forEach((h) => { const el = e.target.closest && e.target.closest(h.sel); if (el && !inside(el, e.relatedTarget)) h.on(el); }); };
+    const out = (e) => { if (!this.fine) return; hs.forEach((h) => { const el = e.target.closest && e.target.closest(h.sel); if (el && !inside(el, e.relatedTarget)) h.off(el); }); };
+    const move = (e) => {
+      this.mx = e.clientX; this.my = e.clientY;
+      if (this.drag) { this.drag.s.scrollLeft = this.drag.l - (e.clientX - this.drag.x) * 1.3; }
+    };
+    const down = (e) => {
+      const s = e.target.closest && e.target.closest("[data-drag]");
+      if (!s || e.pointerType !== "mouse") return;
+      this.drag = { s, x: e.clientX, l: s.scrollLeft }; s.style.cursor = "grabbing"; e.preventDefault();
+    };
+    const up = () => { if (this.drag) { this.drag.s.style.cursor = "grab"; this.drag = null; } };
+    document.addEventListener("mouseover", over);
+    document.addEventListener("mouseout", out);
+    window.addEventListener("pointermove", move, { passive: true });
+    document.addEventListener("pointerdown", down);
+    window.addEventListener("pointerup", up);
+    this.unbind = [
+      () => document.removeEventListener("mouseover", over), () => document.removeEventListener("mouseout", out),
+      () => window.removeEventListener("pointermove", move), () => document.removeEventListener("pointerdown", down),
+      () => window.removeEventListener("pointerup", up)
+    ];
+  }
+
+  loop() {
+    const cur = document.querySelector("[data-cursor-el]"), pv = document.querySelector("[data-preview]");
+    const px0 = this.px || this.mx;
+    this.cx += (this.mx - this.cx) * 0.22; this.cy += (this.my - this.cy) * 0.22;
+    this.px = px0 + (this.mx - px0) * 0.1; this.py = (this.py || this.my) + (this.my - (this.py || this.my)) * 0.1;
+    this.cs += (this.ct - this.cs) * 0.18;
+    const hb = document.querySelector("[data-hero-bg]");
+    if (hb && this.fine) {
+      this.hx = (this.hx || 0) + ((this.mx / innerWidth - 0.5) * -28 - (this.hx || 0)) * 0.05;
+      this.hy = (this.hy || 0) + ((this.my / innerHeight - 0.5) * -18 - (this.hy || 0)) * 0.05;
+      hb.style.transform = `translate3d(${this.hx.toFixed(2)}px, ${this.hy.toFixed(2)}px, 0)`;
+    }
+    if (cur) cur.style.transform = `translate3d(${this.cx - 48}px, ${this.cy - 48}px, 0) scale(${this.cs.toFixed(3)})`;
+    if (pv) {
+      const rot = Math.max(-8, Math.min(8, (this.mx - this.px) * 0.05));
+      pv.style.transform = `translate3d(${this.px + 30}px, ${this.py - 175}px, 0) rotate(${rot.toFixed(2)}deg)`;
+      pv.style.opacity = String(this.pt);
+    }
+    this.raf = requestAnimationFrame(() => this.loop());
+  }
+
+  renderVals() {
+    const r = this.state.route, P = this.P, pad = (n) => String(n).padStart(2, "0");
+    const projects = P.map((p, i) => ({ ...p, num: pad(i + 1), offset: i % 2 ? "16vh" : "0px" }));
+    const ci = r.page === "project" ? Math.max(0, P.findIndex((p) => p.id === r.id)) : 0;
+    const nx = P[(ci + 1) % P.length];
+    const cur = { ...P[ci], num: pad(ci + 1), nextId: nx.id, nextName: nx.name };
+    const m = this.state.modal;
+    return {
+      isHome: r.page === "home", isProjects: r.page === "projects", isProject: r.page === "project",
+      projects, cur, countLabel: "(" + pad(P.length) + ")", countPad: pad(P.length),
+      bgLab: (this.props.n9Background ?? "Capabilities") !== "Capabilities",
+      bgCaps: (this.props.n9Background ?? "Capabilities") !== "Lab",
+      heroImgs: this.LAB.map((src) => ({ src })),
+      lab: this.LAB.map((src, i) => ({ src, num: pad(i + 1), delay: String((i % 3) * 90) })),
+      caps: this.CAPS.map((c, i) => ({ num: pad(i + 1), title: c[0], desc: c[1] })),
+      loaderDisplay: this.state.loaderOut ? "none" : "flex",
+      loaderY: this.state.loaded ? "-100%" : "0%",
+      toTop: (e) => { if (this.state.route.page === "home") { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); } },
+      sendLabel: this.state.sending ? "SENDING…" : (this.state.sent ? "SENT — THANK YOU" : "SEND MESSAGE →"),
+      modalDisplay: m ? "flex" : "none",
+      modalTitle: m === "error" ? "Something went wrong" : "Thanks — your message is on its way!",
+      modalText: m === "error" ? "Please try again in a moment, or email me directly at yafsal22@gmail.com." : "I've received it and will get back to you as soon as I can.",
+      closeModal: () => this.setState({ modal: null }),
+      onOverlayClick: (e) => { if (e.target === e.currentTarget) this.setState({ modal: null }); },
+      onSubmit: (e) => {
+        e.preventDefault();
+        if (this.state.sending) return;
+        const f = e.currentTarget;
+        const get = (n) => { const el = f.elements[n]; return el ? String(el.value || "").trim() : ""; };
+        this.setState({ sending: true });
+        fetch("https://formsubmit.co/ajax/yafsal22@gmail.com", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({ name: get("name"), email: get("email"), message: get("message"), _subject: "New message from Yafedwebsite.1!", _captcha: "false" })
+        })
+          .then((res) => { if (!res.ok) throw new Error("bad"); return res.json(); })
+          .then(() => { f.reset(); this.setState({ sent: true, sending: false, modal: "ok" }); })
+          .catch(() => this.setState({ sending: false, modal: "error" }));
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
