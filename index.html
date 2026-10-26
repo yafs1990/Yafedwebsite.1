@@ -264,7 +264,12 @@ input::placeholder,textarea::placeholder{color:#6f6e69}
     </div>
     <div data-grid2="" style="display: grid; grid-template-columns: minmax(0,1fr) minmax(0,2fr); gap: 6vw; padding: 14vh clamp(20px, 3.2vw, 48px)">
       <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; color: #8b8a84"><span style="color: #f5d400">—</span> OVERVIEW</span>
-      <p data-reveal="" style="margin: 0; font-size: clamp(22px, 2.5vw, 40px); font-weight: 500; line-height: 1.2; letter-spacing: -0.02em; text-wrap: pretty">{{ cur.overview }}</p>
+      <div style="display: grid; gap: 28px">
+        <p data-reveal="" style="margin: 0; font-size: clamp(22px, 2.5vw, 40px); font-weight: 500; line-height: 1.2; letter-spacing: -0.02em; text-wrap: pretty">{{ cur.overview }}</p>
+        <sc-if value="{{ cur.credit }}" hint-placeholder-val="{{ false }}">
+          <p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; color: #c9c7c0; text-transform: uppercase"><span style="color: #f5d400">Credit —</span> {{ cur.credit }}</p>
+        </sc-if>
+      </div>
     </div>
     <div style="display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 16px; padding: 0 clamp(20px, 3.2vw, 48px)">
       <sc-for list="{{ cur.gallery }}" as="g" hint-placeholder-count="3">
@@ -303,7 +308,7 @@ input::placeholder,textarea::placeholder{color:#6f6e69}
 <script type="text/x-dc" data-dc-script data-props="{&quot;showLoader&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;hoverVideo&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;n9Background&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Capabilities&quot;,&quot;Lab&quot;,&quot;Both&quot;],&quot;default&quot;:&quot;Capabilities&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   P = [
-    { id: "kameleon", name: "Kameleon V01", type: "CGI Product Film", client: "Self-initiated", role: "3D · Look Dev · Art Direction", year: "2025", deliverables: "Launch film, key visuals", cover: "kameleon-cover.jpg", video: "kameleon.mp4",
+    { id: "kameleon", name: "Kameleon V01", type: "CGI Product Film", client: "Self-initiated", role: "3D · Look Dev · Art Direction", year: "2026", deliverables: "Launch film, key visuals", cover: "kameleon-cover.jpg", video: "kameleon.mp4",
       overview: "A concept urban sneaker built entirely in CGI. Kameleon V01 explores a skin-like knit and adaptive surface — from macro material studies to the retail world designed around the shoe and its launch film.",
       gallery: [
         { src: "kameleon-1.jpg", col: "1 / -1", w: "100%", ratio: "2576 / 1073" },
@@ -318,6 +323,13 @@ class Component extends DCLogic {
       gallery: [
         { src: "personaiz-1.jpg", col: "1 / -1", w: "100%", ratio: "16 / 9" },
         { src: "personaiz-2.jpg", col: "1 / -1", w: "100%", ratio: "16 / 9" }
+      ] },
+    { id: "dalla", name: "IKEA Dala", type: "CGI Brand Film", client: "IKEA (concept)", role: "3D · Animation · Art Direction", year: "2026", deliverables: "Social film, stills", credit: "Dala horse model by Mariia Drozdova", cover: "dalla-1.jpg", video: "dalla.mp4",
+      overview: "A short brand film for IKEA built around the Dala horse — a Swedish icon packed, sealed and sent down the line like any flat-pack order. Warm light, signature blue rollers and a tight loop made for social.",
+      gallery: [
+        { src: "dalla-1.jpg", col: "1 / -1", w: "100%", ratio: "12 / 5" },
+        { src: "dalla-2.jpg", col: "1 / -1", w: "100%", ratio: "12 / 5" },
+        { src: "dalla-3.jpg", col: "1 / -1", w: "100%", ratio: "12 / 5" }
       ] },
     { id: "myqen", name: "Myqen Yoga", type: "CGI Product Launch", client: "Airplove × Myqen", role: "3D · Animation · Art Direction", year: "2025", deliverables: "Launch film, stills", cover: "myqen-cover.jpg", video: "myqen.mp4",
       overview: "Launch visuals for the Myqen Yoga toothbrush — a soft-metal palette, sculptural set pieces and slow macro moves that let the product read like jewellery.",
@@ -424,7 +436,7 @@ class Component extends DCLogic {
     const cap = document.querySelector("[data-hero-cap]");
     const byId = Object.fromEntries(this.P.map((p) => [p.id, p]));
     byId.n9 = { video: "capabilities.mp4", name: "Geometry Nodes Lab" };
-    const segs = [["kameleon", 0.12], ["personaiz", 0.2], ["myqen", 0.3], ["audiophone", 0.25], ["modwlry", 0.3], ["n9", 0], ["kameleon", 0.55], ["personaiz", 0.62], ["myqen", 0.7], ["audiophone", 0.68], ["modwlry", 0.72]];
+    const segs = [["kameleon", 0.12], ["dalla", 0.1], ["personaiz", 0.2], ["myqen", 0.3], ["audiophone", 0.25], ["modwlry", 0.3], ["n9", 0], ["kameleon", 0.55], ["personaiz", 0.62], ["myqen", 0.7], ["audiophone", 0.68], ["dalla", 0.5], ["modwlry", 0.72]];
     const CUT = 2800;
     const wait = (el, ev, ms) => new Promise((r) => { const t = setTimeout(r, ms); el.addEventListener(ev, () => { clearTimeout(t); r(); }, { once: true }); });
     const prep = async (v, seg) => {
