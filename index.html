@@ -344,6 +344,14 @@ class Component extends DCLogic {
         { src: "audiophone-1.jpg", col: "1 / -1", w: "100%", ratio: "16 / 9" },
         { src: "audiophone-cover.jpg", col: "1 / -1", w: "50%", ratio: "2 / 3" }
       ] },
+    { id: "oden", name: "Odeon", type: "Drone Remote Concept & Launch Film", client: "Self-initiated", role: "Industrial Design · 3D · Art Direction", year: "2026", deliverables: "Product design, launch film, key visuals", cover: "odeon-3.jpg", video: "oden.mp4",
+      overview: "Odeon is a concept remote controller for military drones, designed to be gripped, not held. A rugged, camouflage-textured shell wraps a single glowing ring control, so the operator can steer by feel in the field. The launch film keeps it low-key and tactical — hard light, dark ground and slow macro reveals.",
+      gallery: [
+        { src: "odeon-3.jpg", col: "1 / -1", w: "100%", ratio: "3268 / 1434" },
+        { src: "odeon-2.jpg", col: "1 / -1", w: "100%", ratio: "3268 / 1434" },
+        { src: "odeon-1.jpg", col: "1 / -1", w: "100%", ratio: "3268 / 1434" },
+        { src: "odeon-4.jpg", col: "1 / -1", w: "100%", ratio: "3268 / 1434" }
+      ] },
     { id: "modwlry", name: "Modwlry", type: "Campaign Film", client: "Modwlry", role: "3D · Motion · Art Direction", year: "2025", deliverables: "Campaign film", cover: "modwlry-cover.jpg", video: "modwlry.mp4",
       overview: "Campaign film for a modular jewellery system — pieces orbit, click and lock into place, built around the satisfaction of the snap.",
       gallery: [
@@ -436,7 +444,7 @@ class Component extends DCLogic {
     const cap = document.querySelector("[data-hero-cap]");
     const byId = Object.fromEntries(this.P.map((p) => [p.id, p]));
     byId.n9 = { video: "capabilities.mp4", name: "Geometry Nodes Lab" };
-    const segs = [["kameleon", 0.12], ["dalla", 0.1], ["personaiz", 0.2], ["myqen", 0.3], ["audiophone", 0.25], ["modwlry", 0.3], ["n9", 0], ["kameleon", 0.55], ["personaiz", 0.62], ["myqen", 0.7], ["audiophone", 0.68], ["dalla", 0.5], ["modwlry", 0.72]];
+    const segs = [["kameleon", 0.12], ["dalla", 0.1], ["personaiz", 0.2], ["myqen", 0.3], ["audiophone", 0.25], ["oden", 0.55], ["modwlry", 0.3], ["n9", 0], ["kameleon", 0.55], ["personaiz", 0.62], ["myqen", 0.7], ["audiophone", 0.68], ["dalla", 0.5], ["modwlry", 0.72]];
     const CUT = 2800;
     const wait = (el, ev, ms) => new Promise((r) => { const t = setTimeout(r, ms); el.addEventListener(ev, () => { clearTimeout(t); r(); }, { once: true }); });
     const prep = async (v, seg) => {
